@@ -123,7 +123,7 @@ export default function ManageFacilities() {
                         <div key={index} className="bg-gray-50 p-3 rounded-lg">
                           {Object.entries(item).map(([subKey, subValue]) => (
                             <p key={subKey} className="text-sm text-gray-600">
-                              <span className="font-medium capitalize">{subKey.replace(/([A-Z])/g, ' $1').trim()}</span>: {subValue}
+                              <span className="font-medium capitalize">{subKey.replace(/([A-Z])/g, ' $1').trim()}</span>: {String(subValue)}
                             </p>
                           ))}
                         </div>
