@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Building, Link as LinkIcon, Mail, Phone, Users, Linkedin, MapPin, Calendar } from 'lucide-react';
+import { Building, Link as LinkIcon, Mail, Phone, Users, Linkedin, MapPin, Calendar, BookOpen, Factory } from 'lucide-react';
 
 interface Startup {
   _id: string;
@@ -26,7 +26,9 @@ interface Startup {
   entityType: string;
   teamSize: number;
   dpiitNumber: string;
-  sector: string[];
+  sector: string;
+  industry: string;
+  stagecompleted: string;
   startupMailId: string;
   website: string;
   linkedinStartupUrl: string;
@@ -130,10 +132,8 @@ export default function ManageStartups() {
                   <span>{startup.entityType}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-gray-600">
-                  <Mail className="w-4 h-4" />
-                  <a href={`mailto:${startup.startupMailId}`} className="hover:underline">
-                    {startup.startupMailId}
-                  </a>
+                  <Factory className="w-4 h-4" />
+                  <span>{startup.industry}</span>
                 </div>
               </div>
             </CardContent>
@@ -171,15 +171,27 @@ export default function ManageStartups() {
                       <Users className="w-4 h-4" />
                       <span>Team Size: {selectedStartup.teamSize}</span>
                     </div>
+                    <div className="flex items-center space-x-2 text-gray-600">
+                      <Factory className="w-4 h-4" />
+                      <span>Industry: {selectedStartup.industry}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-600">
+                      <BookOpen className="w-4 h-4" />
+                      <span>Stage Completed: {selectedStartup.stagecompleted}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
                     {selectedStartup.dpiitNumber && (
                       <div className="flex items-center space-x-2 text-gray-600">
                         <span className="font-medium">DPIIT Number:</span>
                         <span>{selectedStartup.dpiitNumber}</span>
                       </div>
                     )}
-                  </div>
-                  
-                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2 text-gray-600">
+                      <span className="font-medium">Sector:</span>
+                      <span>{selectedStartup.sector}</span>
+                    </div>
                     {selectedStartup.website && (
                       <div className="flex items-center space-x-2 text-gray-600">
                         <LinkIcon className="w-4 h-4" />
@@ -258,25 +270,10 @@ export default function ManageStartups() {
                 </div>
               </div>
 
-              {/* Sectors and Requirements */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Sectors & Requirements</h3>
-                {selectedStartup.sector && selectedStartup.sector.length > 0 && (
-                  <div className="space-y-2">
-                    <h4 className="font-medium">Sectors:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedStartup.sector.map((sector) => (
-                        <span 
-                          key={sector} 
-                          className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
-                        >
-                          {sector}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {selectedStartup.lookingFor && selectedStartup.lookingFor.length > 0 && (
+              {/* Requirements */}
+              {selectedStartup.lookingFor && selectedStartup.lookingFor.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Requirements</h3>
                   <div className="space-y-2">
                     <h4 className="font-medium">Looking For:</h4>
                     <div className="flex flex-wrap gap-2">
@@ -290,8 +287,8 @@ export default function ManageStartups() {
                       ))}
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* Timestamps */}
               <div className="space-y-2 text-sm text-gray-500">
